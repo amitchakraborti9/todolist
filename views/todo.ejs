@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>To do</title>
+  <link rel="stylesheet" href="styles/styles.css">
+</head>
+
+<body>
+  <div class="box" id="heading">
+
+    <h1><%=dayof%></h1>
+
+  </div>
+  <div class="box">
+
+
+
+
+    <% it.forEach(function(reg){  %>
+      <form action="/delete" method="post">
+
+    <div class="item">
+      <input type="checkbox" name="checker" value="<%=reg._id%>" onchange="this.form.submit()">
+
+      <p><%=reg.name%></p>
+
+    </div>
+    <input type="hidden" name="listname" value="<%=dayof%>">
+          </form>
+    <%  }); %>
+
+    <form class="item" action='/<%=dayof%>' method="post">
+      <input type="text" name="item" value="" placeholder="New Item">
+      <button type="submit" name="button">+</button>
+
+    </form>
+
+
+
+  </div>
+</body>
+
+</html>
