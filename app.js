@@ -54,7 +54,8 @@ item.find({},function(err,batch){
   });
 
 res.render("todo", {dayof: today.toLocaleDateString("en-US",options),
-it: batch });
+it: batch,
+info: "" });
 });
 });
 app.get("/:newlist",function(req,res){
@@ -69,11 +70,13 @@ app.get("/:newlist",function(req,res){
       });
       newnn.save();
       res.render("todo", {dayof: customList,
-      it: items });
+      it: items ,
+info: "hidden"});
     }
     else
     res.render("todo", {dayof: customList,
-    it: getter.listitem });
+    it: getter.listitem,
+info: "hidden" });
   }
   });
 

@@ -88,7 +88,12 @@ input[type="text"]:focus {
   color: grey;
   opacity: 1;
 }
-
+.guide {
+  color: white;
+}
+.guide p {
+color: white;
+}
 footer {
   color: white;
   color: rgba(0, 0, 0, 0.5);
