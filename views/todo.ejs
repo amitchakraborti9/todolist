@@ -5,14 +5,32 @@
   <meta charset="utf-8">
   <title>To do</title>
   <link rel="stylesheet" href="styles/styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+   
+  <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script src="script.js" defer></script>
 </head>
 
 <body>
+  <nav class="main__navbar"><i class="fas fa-ellipsis-h fa-3x newlist all_list__btn" onclick="showall()"></i><i class="fas fa-plus-square fa-3x newlist new_list__btn"></i></nav>
+  <div id="lists" class="list__names">
+    <a href="/">/</a>
+    <% allLists.forEach(list=>{ %>
+      <% if (list.name === dayof ) return; %>
+      <a href="/<%=list.name%>"><%=list.name%></a>
+    <% }) %>
+  </div>
   <div class="box" id="heading">
 
     <h1><%=dayof%></h1>
 
   </div>
+  <!-- <div class="new_list">
+    <i class="fas fa-plus-square fa-7x"></i>
+  </div> -->
   <div class="box">
 
 

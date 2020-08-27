@@ -35,15 +35,8 @@ const it3=new item({
   name: "<--Hit this to delete an item"
 });
 let items=[it1,it2,it3];
+
 app.get("/", function(req, res) {
-
-
-// if(items.length==0) {
-// item.insertMany(defaultItems,function(err)
-// {});
-// res.redirect("/");
-// }
-// else
 item.find({},function(err,batch){
   if (batch.length===0)
   item.insertMany(items,function(err){
@@ -52,13 +45,17 @@ item.find({},function(err,batch){
     else
     console.log("success default");
   });
-
-res.render("todo", {dayof: today.toLocaleDateString("en-US",options),
-it: batch,
-info: "" });
+  list.find({},function(err,lists) {
+    console.log(lists);
+    res.render("todo", {dayof: today.toLocaleDateString("en-US",options),
+    it: items ,
+info: "",
+allLists: lists});
+  });
 });
 });
 app.get("/:newlist",function(req,res){
+  
   const customList=_.capitalize(req.params.newlist);
 
   list.findOne({name: customList},function(err,getter){
@@ -69,17 +66,17 @@ app.get("/:newlist",function(req,res){
         listitem: items
       });
       newnn.save();
-      res.render("todo", {dayof: customList,
-      it: items ,
-info: "hidden"});
+      
     }
-    else
-    res.render("todo", {dayof: customList,
-    it: getter.listitem,
-info: "hidden" });
-  }
+}
   });
-
+  list.find({},function(err,lists) {
+    res.render("todo", {dayof: customList,
+    it: items ,
+info: "hidden",
+allLists: lists});
+  });
+  
 });
 app.post("/delete",function(req,res){
   if (req.body.listname==today.toLocaleDateString("en-US",options)) {
