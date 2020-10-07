@@ -15,7 +15,7 @@
 </head>
 
 <body>
-  <nav class="main__navbar"><i class="fas fa-ellipsis-h fa-3x newlist all_list__btn" onclick="showall()"></i><i class="fas fa-plus-square fa-3x newlist new_list__btn"></i></nav>
+  <nav class="main__navbar"><i class="fas fa-ellipsis-h fa-3x newlist all_list__btn" onclick="showall()"></i><i class="fas fa-plus-square fa-3x newlist all_list__btn" onclick="showAdder()"></i></nav>
   <div id="lists" class="list__names">
     <a href="/">/</a>
     <% allLists.forEach(list=>{ %>
@@ -23,14 +23,17 @@
       <a href="/<%=list.name%>"><%=list.name%></a>
     <% }) %>
   </div>
+  <div id="new__list" class="list__names">
+  <form method="post" action="/new-list">
+  <input name="newListName" type="text" class="all_list__btn" placeholder="Enter name for your new list.">
+  <button type="submit" id="newList">Create List</button>
+  </form>
+  </div>
   <div class="box" id="heading">
 
     <h1><%=dayof%></h1>
 
   </div>
-  <!-- <div class="new_list">
-    <i class="fas fa-plus-square fa-7x"></i>
-  </div> -->
   <div class="box">
 
 

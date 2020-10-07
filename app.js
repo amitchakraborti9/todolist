@@ -7,7 +7,7 @@ const _ = require('lodash');
 app.set('view engine', 'ejs');
 app.use(bodyparser.urlencoded({extended: true}));
 app.use(express.static("public"));
-mongoose.connect("mongodb://localhost:27017/tododb",{useUnifiedTopology: true, useNewUrlParser: true});
+mongoose.connect("mongodb://localhost:27017/tododb",{useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify: false});
 const todoSchema=new mongoose.Schema({
   name: String
 });
@@ -37,6 +37,7 @@ const it3=new item({
 let items=[it1,it2,it3];
 
 app.get("/", function(req, res) {
+  let listItems;
 item.find({},function(err,batch){
   if (batch.length===0)
   item.insertMany(items,function(err){
@@ -45,10 +46,11 @@ item.find({},function(err,batch){
     else
     console.log("success default");
   });
+  else 
+  listItems=batch;
   list.find({},function(err,lists) {
-    console.log(lists);
     res.render("todo", {dayof: today.toLocaleDateString("en-US",options),
-    it: items ,
+    it: listItems ,
 info: "",
 allLists: lists});
   });
@@ -57,7 +59,7 @@ allLists: lists});
 app.get("/:newlist",function(req,res){
   
   const customList=_.capitalize(req.params.newlist);
-
+  let listItems;
   list.findOne({name: customList},function(err,getter){
     if (!err) {
     if (!getter) {
@@ -66,13 +68,15 @@ app.get("/:newlist",function(req,res){
         listitem: items
       });
       newnn.save();
-      
+      listItems=items;
+    } else {
+      listItems=getter.listitem;
     }
 }
   });
   list.find({},function(err,lists) {
     res.render("todo", {dayof: customList,
-    it: items ,
+    it: listItems ,
 info: "hidden",
 allLists: lists});
   });
@@ -88,6 +92,20 @@ app.post("/delete",function(req,res){
     res.redirect("/"+req.body.listname);
   });
 }
+});
+
+app.post('/new-list',(req,res)=>{
+  const nameOfList=_.capitalize(req.body.newListName);
+  list.findOne({name: nameOfList},(err,gotList)=>{
+    if(gotList) {
+      list.find({},function(err,lists) {
+        res.render("duplicate", {
+          allLists: lists});
+            });
+    } else {
+      res.redirect('/'+nameOfList);
+    }
+  });
 });
 
 app.post("/:currentList", function(req,res){
@@ -115,7 +133,6 @@ list.findOne({name: req.params.currentList},function(err,goi){
 res.redirect("/"+req.params.currentList);
 }
 });
-
 
 app.listen(333, function() {
   console.log("server started on port 333");

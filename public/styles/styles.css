@@ -70,6 +70,13 @@ button {
   border-width: 0;
 }
 
+#newList {
+  border-radius: 5px;
+  width: auto;
+  background-color: darkblue;
+  font-size: 15px;
+}
+
 input[type="text"] {
   text-align: center;
   height: 60px;
